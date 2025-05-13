@@ -6,9 +6,20 @@ import requests
 import pandas as pd
 from kagglehub import load_dataset, KaggleDatasetAdapter
 
+
+# Try to load from secrets (Streamlit Cloud)
+api_key = st.secrets.get("OPENROUTER_API_KEY", None)
+
+
+# If not found in secrets.toml, try .env (for local dev)
+if not api_key:
+    from dotenv import load_dotenv
+    load_dotenv()
+    api_key = os.getenv("OPENROUTER_API_KEY")
+
 # Load environment variables
-load_dotenv()
-api_key = os.getenv("OPENROUTER_API_KEY")  # Your OpenRouter API key
+# load_dotenv()
+# api_key = os.getenv("OPENROUTER_API_KEY")  # Your OpenRouter API key
 
 if not api_key:
     raise ValueError("OPENROUTER_API_KEY not found in .env file.")
